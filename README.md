@@ -183,3 +183,49 @@ Postman (Cliente/Usuário): Ferramenta usada para testar e visualizar as informa
 3. Resposta JSON (Status 200): O servidor busca os dados guardados e devolve para a tela do usuário com sucesso.
 
 ## COMO RODAR E REFLEXÃO
+
+#### 4.1) Como Rodar o Projeto
+1. Pré-requisitos:
+
+Node.js instalado (versão 18 ou superior).
+
+2. Como Instalar:
+
+Abra o terminal na pasta do projeto e instale as dependências com o comando:
+
+Bash
+npm install
+3. Como Rodar:
+
+Para iniciar o servidor, execute:
+
+Bash
+node server.js
+
+#### 4. Como saber se está funcionando:
+
+O terminal mostrará a mensagem de confirmação:
+
+Servidor rodando na porta 3000
+
+#### 5. Como Testar (Via Postman):
+
+Listar histórico (GET): Use o método GET na URL http://localhost:3000/api/dados para ver as leituras salvas.
+
+Cadastrar dados (POST): Use o método POST na mesma URL. Na aba Body -> raw -> JSON, envie o objeto abaixo para simular o sensor:
+
+JSON
+{ "temperatura": 25, "umidade": 60, "hora": "12:00" }
+4.2) Tecnologias Usadas
+Node.js — Ambiente de execução que permite rodar o código JavaScript no servidor.
+
+Express — Framework usado para criar as rotas (endpoints) e gerenciar as requisições HTTP da API.
+
+CORS — Pacote de segurança que permite que o servidor aceite requisições vindas do ESP32 ou de outras origens.
+
+JSON — Formato de texto padronizado utilizado para a troca de dados entre o sensor, o servidor e o cliente.
+
+Postman — Ferramenta utilizada para testar o funcionamento das rotas antes de integrar o hardware.
+
+### Reflexão pessoal
+o que eu mais gostei foi observar os conceitos do CRUD de POST e GET, pois é muito legal ver as mensagens sendo recebidas, os dados sendo alterados ou apagados. A maior dificuldade foi fazer as próprias modificações no vs code.
