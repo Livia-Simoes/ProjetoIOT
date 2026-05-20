@@ -56,8 +56,130 @@ O principal motivo para utilizarmos é sua universalidade e simplicidade. Por se
 
 
 ##  DOCUMENTAÇÃO DOS ENDPOINTS/ROTAS
+#### 📊 1. Buscar Histórico Completo
+Rota: GET /api/dados
 
+Descrição: Retorna a lista com todas as leituras de sensores armazenadas.
 
+Parâmetros: Nenhum.
+
+Exemplo de Requisição: GET http://localhost:3000/api/dados
+
+Resposta de Sucesso (201 OK):
+
+[
+  {"id": 1, "temperatura": 30, "umidade": 40, "hora": "09:00"},
+  {"id": 2, "temperatura": 25, "umidade": 56, "hora": "10:00"},
+  {"id": 3, "temperatura": 20, "umidade": 30, "hora": "11:00"}
+]
+
+#### 🔍 2. Buscar por ID Específico
+Rota: GET /api/dados/:id
+
+Descrição: Filtra e retorna apenas o registro correspondente ao ID enviado na URL.
+
+Parâmetros: id (obrigatório, na URL).
+
+Exemplo de Requisição: GET http://localhost:3000/api/dados/2
+
+Resposta de Sucesso (200 OK):
+
+{"id": 2, "temperatura": 25, "umidade": 56, "hora": "10:00"}
+
+Resposta de Erro (404 Not Found):
+{"mensagem": "ID não encontrado!"}
+
+#### 📥 3. Cadastrar Nova Leitura
+Rota: POST /api/dados
+
+Descrição: Recebe os dados do sensor e cria um novo registro com ID gerado automaticamente.
+
+Parâmetros: Nenhum na URL. Requer corpo (Body) em JSON.
+
+Exemplo de Requisição: POST http://localhost:3000/api/dados
+
+Body:
+{
+  "temperatura": 28,
+  "umidade": 45,
+  "hora": "12:00"
+}
+
+Resposta de Sucesso (201 Created):
+
+JSON
+{
+  "mensagem": "Dados enviados com sucesso!",
+  "dados": {"id": 4, "temperatura": 28, "umidade": 45, "hora": "12:00"}
+}
+
+Resposta de Erro (400 Bad Request):
+
+JSON
+{"mensagem": "Dados incompletos! Verifique novamente!"}
+
+#### 🔄 4. Atualizar Registro Existente
+Rota: PUT /api/dados/:id
+
+Descrição: Substitui as informações de um registro salvo com base no ID informado.
+
+Parâmetros: id (obrigatório, na URL) e Corpo (Body) em JSON.
+
+Exemplo de Requisição: PUT http://localhost:3000/api/dados/2
+
+Body:
+
+JSON
+{
+  "temperatura": 26,
+  "umidade": 50,
+  "hora": "10:30"
+}
+
+Resposta de Sucesso (200 OK):
+
+JSON
+{"mensagem": "Dados atualizados com sucesso!"}
+
+Resposta de Erro (404 Not Found):
+
+JSON
+{"mensagem": "Não é possível atualizar. ID inexistente!"}
+
+#### ❌ 5. Remover Registro do Histórico
+   
+Rota: DELETE /api/dados/:id
+
+Descrição: Exclui permanentemente um registro do sistema utilizando o ID.
+
+Parâmetros: id (obrigatório, na URL).
+
+Exemplo de Requisição: DELETE http://localhost:3000/api/dados/3
+
+Resposta de Sucesso (200 OK):
+
+JSON
+{"mensagem": "Dados excluídos com sucesso!"}
+Resposta de Erro (404 Not Found):
+
+JSON
+{"mensagem": "Não é possível excluir um dado inexistente!"}
 ## DIAGRAMA DA ARQUITETURA
+<img width="961" height="423" alt="image" src="https://github.com/user-attachments/assets/5913c00f-ca9d-48c4-9991-ad1fb8c7b3e5" />
+
+📝 Legenda do Diagrama
+ESP32 (Dispositivo IoT): Lê a temperatura e a umidade do ambiente.
+
+1. POST /api/dados: O sensor envia as leituras em formato JSON para o servidor.
+
+API Node.js + Express: Recebe o pedido, processa a informação e gerencia o sistema.
+
+Banco de Dados (Em Memória): Um array na memória RAM que guarda todo o histórico de dados recebidos.
+
+Postman (Cliente/Usuário): Ferramenta usada para testar e visualizar as informações.
+
+2. GET /api/dados: O Postman solicita a lista com o histórico de leituras.
+
+3. Resposta JSON (Status 200): O servidor busca os dados guardados e devolve para a tela do usuário com sucesso.
 
 ## COMO RODAR E REFLEXÃO
